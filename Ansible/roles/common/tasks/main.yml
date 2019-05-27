@@ -1,0 +1,28 @@
+- name: "Install python3"
+  become: "yes"
+  become_user: "root"
+  become_method: "sudo"
+  command: "apt-get install -y python3"
+  args:
+    warn: "False"
+
+
+- include: "docker.yml"
+  become: "yes"
+  become_user: "root"
+  become_method: "sudo"
+
+- name: "copy docker-compose and env_file file to instance"
+  copy:
+    src: ../Docker/{{ item }}
+    dest: /home/ubuntu/
+    owner: ubuntu
+  with_list:
+  - docker-compose.yml
+  - env_file
+
+- name: "change to working dir"
+  command: bash -lc "cd /home/ubuntu/"
+
+- name: "start application"
+  command: bash -lc "sudo docker-compose up"

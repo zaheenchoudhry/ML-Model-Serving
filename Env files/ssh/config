@@ -1,0 +1,9 @@
+HOST nginx
+User ubuntu
+HostName 35.183.26.224
+IdentityFile ~/.ssh/KeyPairTestZC.pem
+
+HOST test_instance
+User ubuntu
+HostName 35.182.246.21
+IdentityFile ~/.ssh/test_instance

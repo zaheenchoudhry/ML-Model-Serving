@@ -1,0 +1,52 @@
+- name: "Update the apt package index"
+  command: "apt-get -y update"
+  args:
+    warn: "False"
+
+- name: "Install pip tool"
+  command: "apt-get install -y python3-pip"
+  args:
+    warn: "False"
+
+- name: "install docker dependency"
+  pip:
+    name: "docker"
+
+- name: "Update the apt package index"
+  command: "apt-get -y update"
+  args:
+    warn: "False"
+
+- name: "Add dependent package repositories"
+  command: "apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common"
+  args:
+    warn: "False"
+
+- name: "Add docker official key"
+  apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: "present"
+
+- name: "Add docker repository"
+  command: "add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable\""
+
+- name: "Update apt repository"
+  command: "apt-get -y update"
+  args:
+    warn: "False"
+
+- name: "Install docker composer"
+  command: "apt-get install docker-ce -y"
+  args:
+    warn: "False"
+
+- name: "Install docker compose"
+  command: "apt-get install docker-compose -y"
+
+- name: "Add user to docker group"
+  command: "usermod -aG docker ${USER}"
+
+- name: "Start docker daemon"
+  service:
+    name: "docker"
+    state: "restarted"

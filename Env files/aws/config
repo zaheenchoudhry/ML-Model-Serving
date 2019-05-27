@@ -1,0 +1,3 @@
+[profile test_public_ec2]
+region = ca-central
+output = json

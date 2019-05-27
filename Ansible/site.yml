@@ -1,0 +1,4 @@
+- name: "Install Docker, Install Docker Compose, Deploy nginx and api/app containers"
+  hosts: "test_instance"
+  roles:
+    - "common"

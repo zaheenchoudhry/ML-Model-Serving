@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  api:
+    container_name: api # Name can be anything
+    restart: always
+    #build: ./api
+    image: zaheenchoudhry/api
+    expose:
+      - "8000"
+    command: gunicorn -w 1 -b :8000 api:app
+
+  nginx:
+    container_name: nginx
+    restart: always
+    #build: ./nginx
+    image: zaheenchoudhry/nginx
+    env_file: ./env_file
+    links:
+      - api
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
